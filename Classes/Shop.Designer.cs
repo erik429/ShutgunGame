@@ -149,9 +149,9 @@
             label5.ForeColor = Color.Yellow;
             label5.Location = new Point(263, 260);
             label5.Name = "label5";
-            label5.Size = new Size(56, 25);
+            label5.Size = new Size(104, 25);
             label5.TabIndex = 8;
-            label5.Text = "label5";
+            label5.Text = "Money 4000$";
             // 
             // Shop
             // 
@@ -167,6 +167,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "Shop";
             Text = "Form1";
+            Load += Shop_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             groupBox1.ResumeLayout(false);

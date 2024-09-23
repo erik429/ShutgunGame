@@ -1,35 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace ShutgunGame.Classes
+﻿namespace ShutgunGame.Classes
 {
     public partial class Shop : Form
     {
-        private int dollar;
-        public Shop(int money)
+        int armorCost = 4000;
+        int shotgunCost = 8000;
+        public int money;
+        Inventory inventory = new Inventory();
+        public Shop(Inventory gameInventory, ref int playerMoney)
         {
+            inventory = gameInventory;
+            money = playerMoney;
             InitializeComponent();
-            dollar = money;
-            label5.Text = "Money: " + money.ToString() + " $";
+            label5.Text = "Money: " + playerMoney + " $";
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            if (dollar >= 4000)
+            if (money >= armorCost)
             {
-                MessageBox.Show("You can buy");
-
+                inventory.AddItem(("Armor"));
+                money -= armorCost;
+                MessageBox.Show("You bought armor");
             }
             else
             {
-                MessageBox.Show("You can't buy");
+                MessageBox.Show("You don't have the money...");
             }
         }
 
@@ -40,18 +35,23 @@ namespace ShutgunGame.Classes
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
-            
+
 
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
         {
-            
+
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Do you want to buy Shotgun?");
+        }
+
+        private void Shop_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

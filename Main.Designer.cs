@@ -294,9 +294,10 @@
             // lblExit
             // 
             lblExit.AutoSize = true;
-            lblExit.BackColor = Color.FromArgb(192, 0, 0);
+            lblExit.BackColor = Color.Black;
             lblExit.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblExit.Location = new Point(1186, 12);
+            lblExit.ForeColor = Color.Red;
+            lblExit.Location = new Point(1195, 9);
             lblExit.Name = "lblExit";
             lblExit.Size = new Size(23, 25);
             lblExit.TabIndex = 23;

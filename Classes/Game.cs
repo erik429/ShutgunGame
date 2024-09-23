@@ -1,11 +1,12 @@
-﻿using System.Text;
+﻿using ShutgunGame.Classes;
+using System.Text;
 
 namespace ShutgunGame
 {
     public class Game
     {
-        GameResult result = new GameResult();
         Player player = new Player();
+        public Inventory inventory;
         Computer computer;
         public bool LostGame { get; set; }
         public bool WonGame { get; set; }
@@ -16,6 +17,7 @@ namespace ShutgunGame
         public bool coinflipped { get; set; }
         public Game()
         {
+            inventory = new Inventory();
             computer = new Computer(player);
             Round = 0;
         }
@@ -35,6 +37,18 @@ namespace ShutgunGame
         {
             if (computer.AIBullets == 3) return true;
             return false;
+        }
+        public bool CheckArmor()
+        {
+            if (inventory.HasItem("Armor"))
+            {
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
         }
         public string PlayGame(int playerchoice)
         {
@@ -80,9 +94,18 @@ namespace ShutgunGame
             {
                 if (AIchoice == 1)
                 {
-                    LostRound = true;
-                    LostGame = true;
-                    gameResult.AppendLine("AI shot, and you reloaded. YOU LOST THE GAME");
+                    if (inventory.HasItem("Armor"))
+                    {
+                        gameResult.AppendLine("AI shot, and you reloaded. But you had Armor!");
+                        inventory.removeItem("Armor");
+                    }
+                    else
+                    {
+                        LostRound = true;
+                        LostGame = true;
+                        gameResult.AppendLine("AI shot, and you reloaded. YOU LOST THE GAME");
+                    }
+
                 }
                 if (AIchoice == 2)
                 {
@@ -126,9 +149,7 @@ namespace ShutgunGame
                 return "Computer got shotgun. You lost";
                 
             }
-            else
-            {
-                if (CanShotgun() && playerchoice == 4)
+            else if(CanShotgun() && playerchoice == 4)
                 {
                     coinflipped = true;
                     Random coinflip = new Random();
@@ -142,6 +163,10 @@ namespace ShutgunGame
                     return "You lost the coinflip!";
                     
                 }
+            else if (playerchoice == 4)
+            {
+                WonGame = true;
+                return "You got shotgun pangpang!";
             }
             return gameResult.ToString();
         }
