@@ -221,10 +221,11 @@ namespace ShutgunGame.Classes
         }
         private void CalculateWin()
         {
-            a = (int)(Conversion.Int(1 + VBMath.Rnd() * 4));
-            b = (int)(Conversion.Int(1 + VBMath.Rnd() * 4));
-            c = (int)(Conversion.Int(1 + VBMath.Rnd() * 4));
-            d = (int)(Conversion.Int(1 + VBMath.Rnd() * 4));
+            Random random = new Random();
+            a = random.Next(1, 5);
+            b = random.Next(1, 5);
+            c = random.Next(1, 5);
+            d = random.Next(1, 5);
         }
         private void Reset()
         {
