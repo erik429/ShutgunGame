@@ -25,7 +25,7 @@ namespace ShutgunGame
         private int x = 0;
         private int cnt = 0;
         private int bet = 0;
-        public int money = 114400;
+        public int money = 1100;
 
         private int mouseX = 0;
         private int mouseY = 0;
