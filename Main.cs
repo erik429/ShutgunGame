@@ -25,7 +25,7 @@ namespace ShutgunGame
         private int x = 0;
         private int cnt = 0;
         private int bet = 0;
-        public int money = 100000;
+        public int money = 1100;
 
         private int mouseX = 0;
         private int mouseY = 0;
@@ -549,6 +549,7 @@ namespace ShutgunGame
 
         private void btnBlock_Click(object sender, EventArgs e) //BTN BLOCK
         {
+            
             btnSlots.Enabled = false;
             btnShop.Enabled = false;
             pbAddBet.Enabled = false;
@@ -563,11 +564,13 @@ namespace ShutgunGame
 
         private void btnSlots_Click(object sender, EventArgs e) //OPEN SLOT FORM
         {
+            pbAddBet.Hide();
             //MainTheme(@"C:\Demo\saloon.mp3");
             Slots slots = new Slots(money);
             slots.Show();
             slots.FormClosed += (s, args) =>
             {
+                pbAddBet.Show();
                 this.money = slots.Money;
                 UpdateUI();
             };
@@ -575,10 +578,12 @@ namespace ShutgunGame
 
         private void btnShop_Click(object sender, EventArgs e) //OPEN SHOP FORM
         {
+            pbAddBet.Hide();
             Shop shop = new Shop(game.inventory, ref money);
             shop.Show();
             shop.FormClosed += (s, args) =>
             {
+                pbAddBet.Show();
                 this.money = shop.money;
                 UpdateUI();
             };
