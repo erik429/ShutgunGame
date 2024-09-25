@@ -1,5 +1,7 @@
 using ShutgunGame.Classes;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using static System.Reflection.Metadata.BlobBuilder;
 
 namespace ShutgunGame
@@ -19,11 +21,13 @@ namespace ShutgunGame
         private int computerballYSpeed = 0;
         private int computerballX = 1000;
         private int computerballY = 248;
+
         private int x = 0;
         private int cnt = 0;
-        public int money = 1000;
-        private int mouseX = 0;
         private int bet = 0;
+        public int money = 100000;
+
+        private int mouseX = 0;
         private int mouseY = 0;
         private string gameResult;
         private bool ranbefore = false;
@@ -37,50 +41,47 @@ namespace ShutgunGame
             InitializeComponent();
             this.DoubleBuffered = true;
             this.Paint += new PaintEventHandler(OnPaint);
-            this.Paint += new PaintEventHandler(OnPaint2);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            btnShotGun.Visible = false;
+            btnShotgun.Visible = false;
             HideAll();
             //MainTheme(@"C:\Demo\maintheme.mp3");
             foreach (Control control in this.Controls)
             {
-                if (control != btnStartGame && control != label1 && control != panel2 && control != lblExit && control != panel1)
+                if (control != btnStartGame && control != lblGameName && control != panel2 && control != lblExit && control != panel1)
                 {
                     control.Visible = false;
                 }
             }
         }
-        private void OnPaint(object sender, PaintEventArgs e)
+        private void OnPaint(object sender, PaintEventArgs e) //DRAW BULLET 
         {
             if (shouldDrawBall)
             {
                 Graphics g = e.Graphics;
                 g.FillRectangle(Brushes.Black, new Rectangle(ballX, ballY, 10, 10));
             }
-        }
-        private void OnPaint2(object sender, PaintEventArgs e)
-        {
             if (shouldDrawBallcomputer)
             {
                 Graphics g = e.Graphics;
                 g.FillRectangle(Brushes.Black, new Rectangle(computerballX, computerballY, 10, 10));
             }
         }
-        private void timer1_Tick(object sender, EventArgs e)
+        private void timer1_Tick(object sender, EventArgs e) //BULLET AND PICTURES ANIMATION
         {
             if (choice == 1)
             {
                 if (ranbefore == false)
                 {
-                    if (game.AIchoice == 2 && ballX >= 1000)
+                    if (game.AIchoice == 2 && ballX >= 1050)
                     {
-                        //MessageBox.Show("player shot, computer reload. player won... Exiting....");
+                        PlaySound(@"C:\Demo\bullethit.mp3");
+                        pbDeathComputer.Show();
                         //ANIMATION KILL COMPUTER WIN GAME
                         timerHide.Start();
-
+                        ResetPlayerBall();
                         gunAnimationTimer.Stop();
                         ranbefore = true;
                     }
@@ -119,18 +120,39 @@ namespace ShutgunGame
                         explosion.Show();
                         ResetComputerBall();
                         ResetPlayerBall();
-                        shouldDrawBallcomputer = false;
-                        shouldDrawBall = false;
                         gunAnimationTimer.Stop();
                         timerHide.Start();
                     }
                 }
-                if (choice == 2 && computerballX <= 80)
+                if (choice == 2 && computerballX <= 150 && computerballX >= 80)
                 {
-                    PlaySound(@"C:\Demo\yoda.mp3");
                     //ANIMATION KILL PLAYER. LOSE GAME
-                    timerHide.Start();
-                    gunAnimationTimer.Stop();
+                    if (ranbefore == false)
+                    {
+                        ranbefore = true;
+                        if (!game.CheckArmor())
+                        {
+                            PlaySound(@"C:\Demo\bullethit.mp3");
+                            pbDeathPlayer.Show();
+                            ResetComputerBall();
+                            timerHide.Start();
+                            gunAnimationTimer.Stop();
+                        }
+                        else
+                        {
+                            game.RemoveArmor();
+                            PlaySound(@"C:\Demo\ricochet.wav");
+                            computerballYSpeed = 80;
+                        }
+
+                    }
+
+                    if (computerballX <= 80)
+                    {
+                        timerHide.Start();
+                        gunAnimationTimer.Stop();
+                        ranbefore = false;
+                    }
                 }
                 if (choice == 3)
                 {
@@ -156,15 +178,22 @@ namespace ShutgunGame
             }
             this.Invalidate();
         }
-        private void UpdateUI()
+        private void UpdateUI() // UPDATE UI
         {
-            label7.Text = "Money: " + money.ToString();
-            label8.Text = "Bet: " + bet.ToString();
+            if (game.CheckArmor())
+            {
+                pbArmor.Show();
+            }
+            if (game.CheckShotgun())
+            {
+                pbShotgun.Show();
+            }
+            lblMoney.Text = "Money: " + money.ToString();
+            lblBet.Text = "Bet: " + bet.ToString();
             lblRoundAmount.Text = "Round: " + ToRoman(game.Round);
-            label2.Text = "Player Bullets: " + game.GetBullet();
+            lblPlayerBullet.Text = "Player Bullets: " + game.GetBullet();
 
-            label3.Text = "Computer Bullets: " + game.GetComputer();
-            //label6.Text = game.AIchoice.ToString();
+            lblComputerBullet.Text = "Computer Bullets: " + game.GetComputer();
             if (game.GetBullet() == "0")
             {
                 btnShot.Enabled = false;
@@ -174,63 +203,23 @@ namespace ShutgunGame
                 btnShot.Enabled = true;
 
             }
-            if (game.GetBullet() == "3")
-            {
-                MainTheme(@"C:\Demo\intenseduel.mp3");
-                btnShotGun.Visible = true;
-            }
         }
         private void ResetPlayerBall()
         {
+            shouldDrawBall = false;
             ballX = 180;
             ballY = 248;
             ballYSpeed = 0;
         }
         private void ResetComputerBall()
         {
+            shouldDrawBallcomputer = false;
             computerballX = 1000;
             computerballY = 248;
             computerballYSpeed = 0;
         }
-        private void button1_Click_1(object sender, EventArgs e)
+        private void DisableUserControl()
         {
-            pictureBox1.Enabled = false;
-            PlaySound(@"C:\Demo\gun.wav");
-            ResetPlayerBall();
-            playerGun.Show();
-            shouldDrawBall = true;
-            choice = 1;
-            gameResult = game.PlayGame(choice);
-            ComputerChoice();
-            gunAnimationTimer.Start();
-            UpdateUI();
-            btnShot.Visible = false;
-            btnReload.Visible = false;
-            btnBlock.Visible = false;
-        }
-        private void button2_Click(object sender, EventArgs e)
-        {
-            pictureBox1.Enabled = false;
-            PlaySound(@"C:\Demo\reload.wav");
-            choice = 2;
-            gameResult = game.PlayGame(choice);
-            playerReload.Show();
-            ComputerChoice();
-            UpdateUI();
-            btnShot.Visible = false;
-            btnReload.Visible = false;
-            btnBlock.Visible = false;
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            pictureBox1.Enabled = false;
-            PlaySound(@"C:\Demo\block.wav");
-            choice = 3;
-            gameResult = game.PlayGame(choice);
-            playerShield.Show();
-            ComputerChoice();
-            UpdateUI();
             btnShot.Visible = false;
             btnReload.Visible = false;
             btnBlock.Visible = false;
@@ -240,7 +229,6 @@ namespace ShutgunGame
             if (game.CanShotgun())
             {
                 PlaySound(@"C:\Demo\shotgunreload.mp3");
-                MainTheme(@"C:\Demo\intenseduel.mp3");
             }
             if (game.AIchoice == 1)
             {
@@ -276,8 +264,17 @@ namespace ShutgunGame
         }
         private void HideAll()
         {
-
-            label9.Hide();
+            if (!game.CheckArmor())
+            {
+                pbArmor.Hide();
+            }
+            if (!game.CheckShotgun())
+            {
+                pbShotgun.Hide();
+            }
+            pbDeathComputer.Hide();
+            pbDeathPlayer.Hide();
+            lblWin.Hide();
             playerGun.Hide();
             playerMuzzle.Hide();
             computerShield.Hide();
@@ -286,110 +283,46 @@ namespace ShutgunGame
             computerReload.Hide();
             playerShield.Hide();
             explosion.Hide();
-            label5.Hide();
-            label6.Hide();
+            lblGameResult.Hide();
+            lblGameOver.Hide();
         }
 
-        private async void timerHide_Tick(object sender, EventArgs e)
+        private void TimerShowResult(object sender, EventArgs e) //SHOW GAME RESULT AND RESET
         {
             x++;
-            if (x == 200) // x 10 ms
+            if (x == 100) // x 10 ms
             {
+                x = 0;
                 ResetComputerBall();
                 ResetPlayerBall();
-                shouldDrawBallcomputer = false;
-                shouldDrawBall = false;
-                x = 0;
-                timerHide.Stop();
                 HideAll();
                 timerShowResult.Start();
-                label5.Text = gameResult;
-                label5.Show();
-                label5.Refresh();
-                CoinFlip();
-                WinOrLose();
+                if (!game.coinflipped)
+                {
+                    ShowGameResult();
+                }
+                if (!WinOrLoose.IsBusy)
+                {
+                    WinOrLoose.RunWorkerAsync();
+                }
+                timerHide.Stop();
             }
         }
-        private async void CoinFlip()
+        private void ShowGameResult() //SHOW GAME RESULT AND CENTER IT
         {
-            if (game.coinflipped)
-            {
-                PlaySound(@"C:\Demo\coinflip.mp3");
-                await Task.Delay(3000);
-                PlaySound2(@"C:\Demo\shotgunfire.mp3");
-                await Task.Delay(3000);
-                label5.Text = gameResult;
-                label5.Show();
-                label5.Refresh();
-                await Task.Delay(3000);
-            }
-            else if (game.CanShotgun() && game.GetBullet() != "3")
-            {
-                PlaySound2(@"C:\Demo\shotgunfire.mp3");
-            }
-        }
-        private async void WinOrLose()
-        {
-            if (game.WonGame) // WIN GAME
-            {
-                btnBlock.Visible = false;
-                btnReload.Visible = false;
-                btnShot.Visible = false;
-                foreach (Control control in this.Controls)
-                {
-                    if (control != btnStartGame && control != panel2 && control != lblExit && control != panel1)
-                    {
-                        label9.Visible = true;
-                        control.Visible = false;
-                    }
-                }
-                bet *= 2;
-                money = money + bet;
-                bet = 0;
-                btnStartGame.Text = "Continue";
-                btnStartGame.Visible = true;
-                PlaySound(@"C:\Demo\cash.mp3");
-                MainTheme(@"C:\Demo\winmusic.mp3");
-            }
-            if (game.LostGame) // LOST GAME
-            {
-                btnBlock.Visible = false;
-                btnReload.Visible = false;
-                btnShot.Visible = false;
-                if (game.ShotGunReady)
-                {
-                    PlaySound(@"C:\Demo\shotgunfire.mp3");
-                }
-                money = 1000;
-                bet = 0;
-                MainTheme(@"C:\Demo\gameover.mp3");
-                foreach (Control control in this.Controls)
-                {
-                    if (control != btnStartGame && control != panel2 && control != lblExit && control != panel1 && control != label9)
-                    {
-                        label6.Visible = true;
-                        control.Visible = false;
-                    }
-                }
-                btnStartGame.Text = "Restart game";
-                btnStartGame.Visible = true;
-            }
-            if (game.LostRound == true)
-            {
-                PlaySound(@"C:\Demo\lostround.mp3");
+            lblGameResult.Text = gameResult;
+            lblGameResult.Left = (this.ClientSize.Width - lblGameResult.Width) / 2;
+            lblGameResult.Top = (this.ClientSize.Height - lblGameResult.Height) / 2;
+            lblGameResult.Refresh();
+            lblGameResult.Show();
 
-            }
-            else
-            {
-                PlaySound(@"C:\Demo\winround.mp3");
-            }
         }
-        private void panel1_MouseUp(object sender, MouseEventArgs e)
+        private void panel1_MouseUp(object sender, MouseEventArgs e) //MOVE FORM
         {
             isMouseDown = false;
         }
 
-        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        private void panel1_MouseDown(object sender, MouseEventArgs e) //MOVE FORM
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -399,7 +332,7 @@ namespace ShutgunGame
             }
         }
 
-        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        private void panel1_MouseMove(object sender, MouseEventArgs e) //MOVE FORM
         {
             if (isMouseDown)
             {
@@ -407,27 +340,38 @@ namespace ShutgunGame
             }
         }
 
-        private void timerShowResult_Tick(object sender, EventArgs e)
+        private void TimerHideResult(object sender, EventArgs e) //HIDES GAME RESULT AFTER 2sec
         {
             cnt++;
             if (cnt == 100) // x20ms
             {
-                btnBlock.Visible = true;
-                btnReload.Visible = true;
-                btnShot.Visible = true;
-                timerShowResult.Stop();
                 cnt = 0;
-                label5.Hide();
+                if (game.GetBullet() == "3" && btnStartGame.Visible == false)
+                {
+                    MainTheme(@"C:\Demo\intenseduel.mp3");
+                    btnShotgun.Visible = true;
+                    DisableUserControl();
+                }
+                else if (btnStartGame.Visible == false)
+                {
+                    btnSlots.Enabled = true;
+                    btnShop.Enabled = true;
+                    btnBlock.Visible = true;
+                    btnReload.Visible = true;
+                    btnShot.Visible = true;
+                }
+                timerShowResult.Stop();
+                lblGameResult.Hide();
             }
         }
 
-        private void lblExit_Click(object sender, EventArgs e)
+        private void lblExit_Click(object sender, EventArgs e) //EXIT APP
         {
             this.Close();
         }
-        public static string ToRoman(int number)
+        public static string ToRoman(int number) //CONVERT NUMBER TO ROMAN
         {
-            if ((number < 0) || (number > 3999)) throw new ArgumentOutOfRangeException(nameof(number), "insert value between 1 and 3999");
+            if ((number < 0) || (number > 3999)) throw new ArgumentOutOfRangeException(nameof(number));
             if (number < 1) return string.Empty;
             if (number >= 1000) return "M" + ToRoman(number - 1000);
             if (number >= 900) return "CM" + ToRoman(number - 900);
@@ -444,84 +388,197 @@ namespace ShutgunGame
             if (number >= 1) return "I" + ToRoman(number - 1);
             throw new UnreachableException("Impossible state reached");
         }
-        private void btnStartGame_Click(object sender, EventArgs e)
+        private void btnStartGame_Click(object sender, EventArgs e) //BTN START GAME
         {
             PlaySound(@"C:\Demo\startgame.mp3");
             MainTheme(@"C:\Demo\maintheme.mp3");
             game.NewGame();
             foreach (Control control in this.Controls)
             {
-                if (control != label9)
+                if (control != lblWin)
                     control.Visible = true;
             }
-            btnShotGun.Visible = false;
+            btnShotgun.Visible = false;
             ranbefore = false;
             timerHide.Stop();
             gunAnimationTimer.Stop();
-            pictureBox1.Enabled = true;
+            pbAddBet.Enabled = true;
             btnStartGame.Visible = false;
-            label6.Visible = false;
-            label9.Visible = false;
+            lblGameOver.Visible = false;
+            lblWin.Visible = false;
             UpdateUI();
             HideAll();
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(gunAnimationTimer.Enabled.ToString());
-            MessageBox.Show(timerHide.Enabled.ToString());
-        }
-
-        private void btnShotGun_Click(object sender, EventArgs e)
+        private void btnShotGun_Click(object sender, EventArgs e) //CLICK SHOTGUN
         {
             gameResult = game.PlayGame(4);
             timerHide.Start();
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void PbAddBet(object sender, EventArgs e)
         {
-            PlaySound(@"C:\Demo\cash.mp3");
-            if (money > 0)
+            if (money > 249)
             {
-                money -= 100;
-                bet += 100;
+                money -= 250;
+                bet += 250;
+                PlaySound(@"C:\Demo\cash.mp3");
+            }
+            else if (money < 249 && money > 0)
+            {
+                bet += money;
+                money -= money;
+                PlaySound(@"C:\Demo\cash.mp3");
             }
             else
             {
-                pictureBox1.Enabled = false;
+                pbAddBet.Enabled = false;
             }
-            label8.Text = "Bet: " + bet.ToString() + " $";
-            label7.Text = "Money: " + money.ToString() + " $";
+            lblBet.Text = "Bet: " + bet.ToString() + " $";
+            lblMoney.Text = "Money: " + money.ToString() + " $";
         }
-
-        private void button1_Click_2(object sender, EventArgs e)
+        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e) //WIN GAME THREAD.
         {
-            Shop shop = new Shop(game.inventory, ref money);
-            shop.Show();
-            shop.FormClosed += (s, args) =>
+            if (game.coinflipped)
             {
-                MainTheme(@"C:\Demo\theme.wav");
-                this.money = shop.money;
-                UpdateUI();
-            };
+                PlaySound(@"C:\Demo\coinflip.mp3");
+                Thread.Sleep(3000);
+                PlaySound2(@"C:\Demo\shotgunfire.mp3");
+                this.Invoke(new MethodInvoker(() =>
+                {
+                    ShowGameResult();
+                    Thread.Sleep(3000);
+                }));
+            }
+
+
+            this.Invoke(new MethodInvoker(() =>
+            {
+                if (game.WonGame == true) // WIN GAME
+                {
+                    if (game.GetBullet() == "3")
+                    {
+                        PlaySound2(@"C:\Demo\shotgunfire.mp3");
+                        Thread.Sleep(1000);
+                    }
+                    DisableUserControl();
+                    foreach (Control control in this.Controls)
+                    {
+                        if (control != btnStartGame && control != panel2 && control != lblExit && control != panel1)
+                        {
+                            lblWin.Visible = true;
+                            control.Visible = false;
+                        }
+                    }
+                    bet *= 2;
+                    money = money + bet;
+                    bet = 0;
+                    btnStartGame.Text = "Continue";
+                    btnStartGame.Visible = true;
+                    PlaySound(@"C:\Demo\cash.mp3");
+                    MainTheme(@"C:\Demo\winmusic.mp3");
+                }
+                if (game.LostGame == true) // LOST GAME
+                {
+                    ShowGameResult();
+                    if (game.CanShotgun())
+                    {
+                        Thread.Sleep(2000);
+                    }
+                    if (game.ShotGunReady)
+                    {
+                        PlaySound(@"C:\Demo\shotgunfire.mp3");
+                    }
+                    money = 1000;
+                    bet = 0;
+                    MainTheme(@"C:\Demo\gameover.mp3");
+                    foreach (Control control in this.Controls)
+                    {
+                        if (control != btnStartGame && control != panel2 && control != lblExit && control != panel1 && control != lblGameOver)
+                        {
+                            lblGameOver.Visible = true;
+                            control.Visible = false;
+                        }
+                    }
+                    btnStartGame.Text = "Restart game";
+                    btnStartGame.Visible = true;
+                }
+                if (game.LostRound == true)
+                {
+                    PlaySound(@"C:\Demo\lostround.mp3");
+                }
+                else
+                {
+                    PlaySound(@"C:\Demo\winround.mp3");
+                }
+            }));
         }
 
-        private void button2_Click_1(object sender, EventArgs e)
+        private void btnShot_Click(object sender, EventArgs e) //BTN SHOOT
+        {
+            btnSlots.Enabled = false;
+            btnShop.Enabled = false;
+            pbAddBet.Enabled = false;
+            PlaySound(@"C:\Demo\gun.wav");
+            ResetPlayerBall();
+            playerGun.Show();
+            shouldDrawBall = true;
+            choice = 1;
+            gameResult = game.PlayGame(choice);
+            ComputerChoice();
+            gunAnimationTimer.Start();
+            UpdateUI();
+            DisableUserControl();
+        }
+
+        private void btnReload_Click(object sender, EventArgs e) // BTN RELOAD
+        {
+            btnSlots.Enabled = false;
+            btnShop.Enabled = false;
+            pbAddBet.Enabled = false;
+            PlaySound(@"C:\Demo\reload.wav");
+            choice = 2;
+            gameResult = game.PlayGame(choice);
+            playerReload.Show();
+            ComputerChoice();
+            UpdateUI();
+            DisableUserControl();
+        }
+
+        private void btnBlock_Click(object sender, EventArgs e) //BTN BLOCK
+        {
+            btnSlots.Enabled = false;
+            btnShop.Enabled = false;
+            pbAddBet.Enabled = false;
+            PlaySound(@"C:\Demo\block.wav");
+            choice = 3;
+            gameResult = game.PlayGame(choice);
+            playerShield.Show();
+            ComputerChoice();
+            UpdateUI();
+            DisableUserControl();
+        }
+
+        private void btnSlots_Click(object sender, EventArgs e) //OPEN SLOT FORM
         {
             //MainTheme(@"C:\Demo\saloon.mp3");
             Slots slots = new Slots(money);
             slots.Show();
             slots.FormClosed += (s, args) =>
             {
-                MainTheme(@"C:\Demo\theme.wav");
                 this.money = slots.Money;
                 UpdateUI();
             };
         }
 
-        private void button3_Click_1(object sender, EventArgs e)
+        private void btnShop_Click(object sender, EventArgs e) //OPEN SHOP FORM
         {
-            MessageBox.Show(game.CheckArmor().ToString());
+            Shop shop = new Shop(game.inventory, ref money);
+            shop.Show();
+            shop.FormClosed += (s, args) =>
+            {
+                this.money = shop.money;
+                UpdateUI();
+            };
         }
     }
 }

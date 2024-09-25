@@ -41,6 +41,10 @@
             else
             {
                 Random choice = new Random();
+                if (AIBullets == 2 || AIBullets == 1 && player.Bullets == 0)
+                {
+                    return 2;
+                }
                 if (CanShoot() == true)
                 {
                     int result = choice.Next(1, 4);
@@ -51,7 +55,7 @@
                 {
                     int result = choice.Next(1, 3);
                     return result;
-                } 
+                }
                 else
                 {
                     int result = choice.Next(2, 4);

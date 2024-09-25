@@ -31,18 +31,18 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             gunAnimationTimer = new System.Windows.Forms.Timer(components);
-            label1 = new Label();
+            lblGameName = new Label();
             btnShot = new Button();
             btnReload = new Button();
             btnBlock = new Button();
             playerGun = new PictureBox();
             playerMuzzle = new PictureBox();
             computerShield = new PictureBox();
-            label2 = new Label();
+            lblPlayerBullet = new Label();
             playerReload = new PictureBox();
-            label3 = new Label();
+            lblComputerBullet = new Label();
             label4 = new Label();
-            label5 = new Label();
+            lblGameResult = new Label();
             computerGun = new PictureBox();
             computerReload = new PictureBox();
             playerShield = new PictureBox();
@@ -54,14 +54,19 @@
             lblExit = new Label();
             btnStartGame = new Button();
             lblRoundAmount = new Label();
-            label7 = new Label();
-            label8 = new Label();
-            label9 = new Label();
-            label6 = new Label();
-            btnShotGun = new Button();
-            pictureBox1 = new PictureBox();
-            button1 = new Button();
-            button2 = new Button();
+            lblMoney = new Label();
+            lblBet = new Label();
+            lblWin = new Label();
+            lblGameOver = new Label();
+            btnShotgun = new Button();
+            pbAddBet = new PictureBox();
+            btnShop = new Button();
+            btnSlots = new Button();
+            WinOrLoose = new System.ComponentModel.BackgroundWorker();
+            pbArmor = new PictureBox();
+            pbShotgun = new PictureBox();
+            pbDeathComputer = new PictureBox();
+            pbDeathPlayer = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)playerGun).BeginInit();
             ((System.ComponentModel.ISupportInitialize)playerMuzzle).BeginInit();
             ((System.ComponentModel.ISupportInitialize)computerShield).BeginInit();
@@ -70,25 +75,29 @@
             ((System.ComponentModel.ISupportInitialize)computerReload).BeginInit();
             ((System.ComponentModel.ISupportInitialize)playerShield).BeginInit();
             ((System.ComponentModel.ISupportInitialize)explosion).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbAddBet).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbArmor).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbShotgun).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbDeathComputer).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbDeathPlayer).BeginInit();
             SuspendLayout();
             // 
             // gunAnimationTimer
             // 
-            gunAnimationTimer.Interval = 5;
+            gunAnimationTimer.Interval = 20;
             gunAnimationTimer.Tick += timer1_Tick;
             // 
-            // label1
+            // lblGameName
             // 
-            label1.AutoSize = true;
-            label1.BackColor = Color.Transparent;
-            label1.Font = new Font("Vanilla Whale", 72F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.Yellow;
-            label1.Location = new Point(374, 17);
-            label1.Name = "label1";
-            label1.Size = new Size(470, 115);
-            label1.TabIndex = 0;
-            label1.Text = "Shotgun Game";
+            lblGameName.AutoSize = true;
+            lblGameName.BackColor = Color.Transparent;
+            lblGameName.Font = new Font("Vanilla Whale", 72F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            lblGameName.ForeColor = Color.Yellow;
+            lblGameName.Location = new Point(374, 17);
+            lblGameName.Name = "lblGameName";
+            lblGameName.Size = new Size(470, 115);
+            lblGameName.TabIndex = 0;
+            lblGameName.Text = "Shotgun Game";
             // 
             // btnShot
             // 
@@ -103,7 +112,7 @@
             btnShot.TabIndex = 1;
             btnShot.Text = "SHOOT";
             btnShot.UseVisualStyleBackColor = false;
-            btnShot.Click += button1_Click_1;
+            btnShot.Click += btnShot_Click;
             // 
             // btnReload
             // 
@@ -118,7 +127,7 @@
             btnReload.TabIndex = 3;
             btnReload.Text = "RELOAD";
             btnReload.UseVisualStyleBackColor = false;
-            btnReload.Click += button2_Click;
+            btnReload.Click += btnReload_Click;
             // 
             // btnBlock
             // 
@@ -133,7 +142,7 @@
             btnBlock.TabIndex = 4;
             btnBlock.Text = "BLOCK";
             btnBlock.UseVisualStyleBackColor = false;
-            btnBlock.Click += button3_Click;
+            btnBlock.Click += btnBlock_Click;
             // 
             // playerGun
             // 
@@ -166,17 +175,17 @@
             computerShield.TabIndex = 7;
             computerShield.TabStop = false;
             // 
-            // label2
+            // lblPlayerBullet
             // 
-            label2.AutoSize = true;
-            label2.BackColor = Color.Transparent;
-            label2.Font = new Font("Western Bang Bang", 26.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.Yellow;
-            label2.Location = new Point(75, 67);
-            label2.Name = "label2";
-            label2.Size = new Size(168, 36);
-            label2.TabIndex = 8;
-            label2.Text = "Player Bullets:";
+            lblPlayerBullet.AutoSize = true;
+            lblPlayerBullet.BackColor = Color.Transparent;
+            lblPlayerBullet.Font = new Font("Western Bang Bang", 26.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblPlayerBullet.ForeColor = Color.Yellow;
+            lblPlayerBullet.Location = new Point(75, 67);
+            lblPlayerBullet.Name = "lblPlayerBullet";
+            lblPlayerBullet.Size = new Size(168, 36);
+            lblPlayerBullet.TabIndex = 8;
+            lblPlayerBullet.Text = "Player Bullets:";
             // 
             // playerReload
             // 
@@ -188,17 +197,17 @@
             playerReload.TabIndex = 9;
             playerReload.TabStop = false;
             // 
-            // label3
+            // lblComputerBullet
             // 
-            label3.AutoSize = true;
-            label3.BackColor = Color.Transparent;
-            label3.Font = new Font("Western Bang Bang", 26.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.ForeColor = Color.Yellow;
-            label3.Location = new Point(926, 67);
-            label3.Name = "label3";
-            label3.Size = new Size(198, 36);
-            label3.TabIndex = 10;
-            label3.Text = "Computer Bullets:";
+            lblComputerBullet.AutoSize = true;
+            lblComputerBullet.BackColor = Color.Transparent;
+            lblComputerBullet.Font = new Font("Western Bang Bang", 26.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblComputerBullet.ForeColor = Color.Yellow;
+            lblComputerBullet.Location = new Point(926, 67);
+            lblComputerBullet.Name = "lblComputerBullet";
+            lblComputerBullet.Size = new Size(198, 36);
+            lblComputerBullet.TabIndex = 10;
+            lblComputerBullet.Text = "Computer Bullets:";
             // 
             // label4
             // 
@@ -210,16 +219,16 @@
             label4.Size = new Size(0, 36);
             label4.TabIndex = 11;
             // 
-            // label5
+            // lblGameResult
             // 
-            label5.AutoSize = true;
-            label5.BackColor = Color.Transparent;
-            label5.Font = new Font("Vanilla Whale", 47.9999924F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.ForeColor = Color.Khaki;
-            label5.Location = new Point(150, 228);
-            label5.Name = "label5";
-            label5.Size = new Size(0, 77);
-            label5.TabIndex = 12;
+            lblGameResult.AutoSize = true;
+            lblGameResult.BackColor = Color.Transparent;
+            lblGameResult.Font = new Font("Vanilla Whale", 47.9999924F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblGameResult.ForeColor = Color.Khaki;
+            lblGameResult.Location = new Point(0, 0);
+            lblGameResult.Name = "lblGameResult";
+            lblGameResult.Size = new Size(0, 77);
+            lblGameResult.TabIndex = 12;
             // 
             // computerGun
             // 
@@ -236,7 +245,7 @@
             // 
             computerReload.BackColor = Color.Transparent;
             computerReload.Image = (Image)resources.GetObject("computerReload.Image");
-            computerReload.Location = new Point(1036, 237);
+            computerReload.Location = new Point(1036, 220);
             computerReload.Name = "computerReload";
             computerReload.Size = new Size(88, 86);
             computerReload.TabIndex = 15;
@@ -246,7 +255,7 @@
             // 
             playerShield.BackgroundImage = (Image)resources.GetObject("playerShield.BackgroundImage");
             playerShield.BackgroundImageLayout = ImageLayout.Stretch;
-            playerShield.Location = new Point(68, 207);
+            playerShield.Location = new Point(56, 207);
             playerShield.Name = "playerShield";
             playerShield.Size = new Size(161, 160);
             playerShield.TabIndex = 16;
@@ -255,7 +264,7 @@
             // timerHide
             // 
             timerHide.Interval = 10;
-            timerHide.Tick += timerHide_Tick;
+            timerHide.Tick += TimerShowResult;
             // 
             // explosion
             // 
@@ -289,7 +298,7 @@
             // timerShowResult
             // 
             timerShowResult.Interval = 20;
-            timerShowResult.Tick += timerShowResult_Tick;
+            timerShowResult.Tick += TimerHideResult;
             // 
             // lblExit
             // 
@@ -331,116 +340,163 @@
             lblRoundAmount.TabIndex = 25;
             lblRoundAmount.Text = "Round: ";
             // 
-            // label7
+            // lblMoney
             // 
-            label7.AutoSize = true;
-            label7.BackColor = Color.Transparent;
-            label7.Font = new Font("Western Bang Bang", 24F, FontStyle.Bold);
-            label7.ForeColor = Color.Yellow;
-            label7.Location = new Point(25, 543);
-            label7.Name = "label7";
-            label7.Size = new Size(150, 34);
-            label7.TabIndex = 27;
-            label7.Text = "Money 1000$";
+            lblMoney.AutoSize = true;
+            lblMoney.BackColor = Color.Transparent;
+            lblMoney.Font = new Font("Western Bang Bang", 24F, FontStyle.Bold);
+            lblMoney.ForeColor = Color.Yellow;
+            lblMoney.Location = new Point(25, 543);
+            lblMoney.Name = "lblMoney";
+            lblMoney.Size = new Size(150, 34);
+            lblMoney.TabIndex = 27;
+            lblMoney.Text = "Money 1000$";
             // 
-            // label8
+            // lblBet
             // 
-            label8.AutoSize = true;
-            label8.BackColor = Color.Transparent;
-            label8.Font = new Font("Western Bang Bang", 24F, FontStyle.Bold);
-            label8.ForeColor = Color.Yellow;
-            label8.Location = new Point(27, 499);
-            label8.Name = "label8";
-            label8.Size = new Size(93, 34);
-            label8.TabIndex = 29;
-            label8.Text = "Bet 0 $";
+            lblBet.AutoSize = true;
+            lblBet.BackColor = Color.Transparent;
+            lblBet.Font = new Font("Western Bang Bang", 24F, FontStyle.Bold);
+            lblBet.ForeColor = Color.Yellow;
+            lblBet.Location = new Point(27, 499);
+            lblBet.Name = "lblBet";
+            lblBet.Size = new Size(93, 34);
+            lblBet.TabIndex = 29;
+            lblBet.Text = "Bet 0 $";
             // 
-            // label9
+            // lblWin
             // 
-            label9.AutoSize = true;
-            label9.BackColor = Color.Transparent;
-            label9.Font = new Font("Vanilla Whale", 150F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label9.ForeColor = Color.Yellow;
-            label9.Location = new Point(250, 119);
-            label9.Name = "label9";
-            label9.Size = new Size(727, 240);
-            label9.TabIndex = 30;
-            label9.Text = "YOU WIN";
+            lblWin.AutoSize = true;
+            lblWin.BackColor = Color.Transparent;
+            lblWin.Font = new Font("Vanilla Whale", 150F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblWin.ForeColor = Color.Yellow;
+            lblWin.Location = new Point(250, 119);
+            lblWin.Name = "lblWin";
+            lblWin.Size = new Size(727, 240);
+            lblWin.TabIndex = 30;
+            lblWin.Text = "YOU WIN";
             // 
-            // label6
+            // lblGameOver
             // 
-            label6.AutoSize = true;
-            label6.BackColor = Color.Transparent;
-            label6.Font = new Font("Vanilla Whale", 150F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.ForeColor = Color.Red;
-            label6.Location = new Point(156, 103);
-            label6.Name = "label6";
-            label6.Size = new Size(946, 240);
-            label6.TabIndex = 31;
-            label6.Text = "GAME OVER";
+            lblGameOver.AutoSize = true;
+            lblGameOver.BackColor = Color.Transparent;
+            lblGameOver.Font = new Font("Vanilla Whale", 150F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblGameOver.ForeColor = Color.Red;
+            lblGameOver.Location = new Point(146, 119);
+            lblGameOver.Name = "lblGameOver";
+            lblGameOver.Size = new Size(946, 240);
+            lblGameOver.TabIndex = 31;
+            lblGameOver.Text = "GAME OVER";
             // 
-            // btnShotGun
+            // btnShotgun
             // 
-            btnShotGun.BackColor = Color.Black;
-            btnShotGun.BackgroundImage = (Image)resources.GetObject("btnShotGun.BackgroundImage");
-            btnShotGun.BackgroundImageLayout = ImageLayout.Stretch;
-            btnShotGun.FlatStyle = FlatStyle.Flat;
-            btnShotGun.Font = new Font("Western Bang Bang", 27.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnShotGun.ForeColor = Color.Maroon;
-            btnShotGun.Location = new Point(441, 480);
-            btnShotGun.Name = "btnShotGun";
-            btnShotGun.Size = new Size(346, 45);
-            btnShotGun.TabIndex = 32;
-            btnShotGun.Text = "SHOTGUN";
-            btnShotGun.UseVisualStyleBackColor = false;
-            btnShotGun.Click += btnShotGun_Click;
+            btnShotgun.BackColor = Color.Black;
+            btnShotgun.BackgroundImage = (Image)resources.GetObject("btnShotgun.BackgroundImage");
+            btnShotgun.BackgroundImageLayout = ImageLayout.Stretch;
+            btnShotgun.FlatStyle = FlatStyle.Flat;
+            btnShotgun.Font = new Font("Western Bang Bang", 27.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnShotgun.ForeColor = Color.Maroon;
+            btnShotgun.Location = new Point(441, 480);
+            btnShotgun.Name = "btnShotgun";
+            btnShotgun.Size = new Size(346, 45);
+            btnShotgun.TabIndex = 32;
+            btnShotgun.Text = "SHOTGUN";
+            btnShotgun.UseVisualStyleBackColor = false;
+            btnShotgun.Click += btnShotGun_Click;
             // 
-            // pictureBox1
+            // pbAddBet
             // 
-            pictureBox1.BackColor = Color.Transparent;
-            pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
-            pictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox1.Location = new Point(181, 545);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(36, 32);
-            pictureBox1.TabIndex = 33;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
+            pbAddBet.BackColor = Color.Transparent;
+            pbAddBet.BackgroundImage = (Image)resources.GetObject("pbAddBet.BackgroundImage");
+            pbAddBet.BackgroundImageLayout = ImageLayout.Zoom;
+            pbAddBet.Location = new Point(181, 545);
+            pbAddBet.Name = "pbAddBet";
+            pbAddBet.Size = new Size(36, 32);
+            pbAddBet.TabIndex = 33;
+            pbAddBet.TabStop = false;
+            pbAddBet.Click += PbAddBet;
             // 
-            // button1
+            // btnShop
             // 
-            button1.BackColor = Color.Transparent;
-            button1.BackgroundImageLayout = ImageLayout.Stretch;
-            button1.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 255, 192);
-            button1.FlatAppearance.MouseOverBackColor = Color.White;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Western Bang Bang", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.Yellow;
-            button1.Location = new Point(1098, 541);
-            button1.Name = "button1";
-            button1.Size = new Size(101, 45);
-            button1.TabIndex = 34;
-            button1.Text = "Shop";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click_2;
+            btnShop.BackColor = Color.Transparent;
+            btnShop.BackgroundImageLayout = ImageLayout.Stretch;
+            btnShop.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 255, 192);
+            btnShop.FlatAppearance.MouseOverBackColor = Color.White;
+            btnShop.FlatStyle = FlatStyle.Flat;
+            btnShop.Font = new Font("Western Bang Bang", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnShop.ForeColor = Color.Yellow;
+            btnShop.Location = new Point(1098, 541);
+            btnShop.Name = "btnShop";
+            btnShop.Size = new Size(101, 45);
+            btnShop.TabIndex = 34;
+            btnShop.Text = "Shop";
+            btnShop.UseVisualStyleBackColor = false;
+            btnShop.Click += btnShop_Click;
             // 
-            // button2
+            // btnSlots
             // 
-            button2.BackColor = Color.Transparent;
-            button2.BackgroundImageLayout = ImageLayout.Stretch;
-            button2.FlatAppearance.BorderColor = Color.Yellow;
-            button2.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 255, 128);
-            button2.FlatAppearance.MouseOverBackColor = Color.White;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Western Bang Bang", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button2.ForeColor = Color.Yellow;
-            button2.Location = new Point(991, 541);
-            button2.Name = "button2";
-            button2.Size = new Size(101, 45);
-            button2.TabIndex = 35;
-            button2.Text = "Slots";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click_1;
+            btnSlots.BackColor = Color.Transparent;
+            btnSlots.BackgroundImageLayout = ImageLayout.Stretch;
+            btnSlots.FlatAppearance.BorderColor = Color.Yellow;
+            btnSlots.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 255, 128);
+            btnSlots.FlatAppearance.MouseOverBackColor = Color.White;
+            btnSlots.FlatStyle = FlatStyle.Flat;
+            btnSlots.Font = new Font("Western Bang Bang", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSlots.ForeColor = Color.Yellow;
+            btnSlots.Location = new Point(991, 541);
+            btnSlots.Name = "btnSlots";
+            btnSlots.Size = new Size(101, 45);
+            btnSlots.TabIndex = 35;
+            btnSlots.Text = "Slots";
+            btnSlots.UseVisualStyleBackColor = false;
+            btnSlots.Click += btnSlots_Click;
+            // 
+            // WinOrLoose
+            // 
+            WinOrLoose.WorkerSupportsCancellation = true;
+            WinOrLoose.DoWork += backgroundWorker1_DoWork;
+            // 
+            // pbArmor
+            // 
+            pbArmor.BackColor = Color.FromArgb(255, 255, 128);
+            pbArmor.BackgroundImage = (Image)resources.GetObject("pbArmor.BackgroundImage");
+            pbArmor.BackgroundImageLayout = ImageLayout.Stretch;
+            pbArmor.Location = new Point(27, 402);
+            pbArmor.Name = "pbArmor";
+            pbArmor.Size = new Size(54, 50);
+            pbArmor.TabIndex = 36;
+            pbArmor.TabStop = false;
+            // 
+            // pbShotgun
+            // 
+            pbShotgun.BackColor = Color.FromArgb(255, 255, 128);
+            pbShotgun.BackgroundImage = (Image)resources.GetObject("pbShotgun.BackgroundImage");
+            pbShotgun.BackgroundImageLayout = ImageLayout.Stretch;
+            pbShotgun.Location = new Point(87, 402);
+            pbShotgun.Name = "pbShotgun";
+            pbShotgun.Size = new Size(74, 50);
+            pbShotgun.TabIndex = 37;
+            pbShotgun.TabStop = false;
+            // 
+            // pbDeathComputer
+            // 
+            pbDeathComputer.BackColor = Color.Transparent;
+            pbDeathComputer.Image = (Image)resources.GetObject("pbDeathComputer.Image");
+            pbDeathComputer.Location = new Point(963, 175);
+            pbDeathComputer.Name = "pbDeathComputer";
+            pbDeathComputer.Size = new Size(213, 143);
+            pbDeathComputer.TabIndex = 38;
+            pbDeathComputer.TabStop = false;
+            // 
+            // pbDeathPlayer
+            // 
+            pbDeathPlayer.BackColor = Color.Transparent;
+            pbDeathPlayer.Image = (Image)resources.GetObject("pbDeathPlayer.Image");
+            pbDeathPlayer.Location = new Point(35, 172);
+            pbDeathPlayer.Name = "pbDeathPlayer";
+            pbDeathPlayer.Size = new Size(213, 143);
+            pbDeathPlayer.TabIndex = 39;
+            pbDeathPlayer.TabStop = false;
             // 
             // Form1
             // 
@@ -448,14 +504,18 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1221, 588);
-            Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(pictureBox1);
-            Controls.Add(btnShotGun);
-            Controls.Add(label6);
-            Controls.Add(label9);
-            Controls.Add(label8);
-            Controls.Add(label7);
+            Controls.Add(pbDeathPlayer);
+            Controls.Add(pbDeathComputer);
+            Controls.Add(pbShotgun);
+            Controls.Add(pbArmor);
+            Controls.Add(btnSlots);
+            Controls.Add(btnShop);
+            Controls.Add(pbAddBet);
+            Controls.Add(btnShotgun);
+            Controls.Add(lblGameOver);
+            Controls.Add(lblWin);
+            Controls.Add(lblBet);
+            Controls.Add(lblMoney);
             Controls.Add(lblRoundAmount);
             Controls.Add(btnStartGame);
             Controls.Add(lblExit);
@@ -465,18 +525,18 @@
             Controls.Add(playerShield);
             Controls.Add(computerReload);
             Controls.Add(computerGun);
-            Controls.Add(label5);
+            Controls.Add(lblGameResult);
             Controls.Add(label4);
-            Controls.Add(label3);
+            Controls.Add(lblComputerBullet);
             Controls.Add(playerReload);
-            Controls.Add(label2);
+            Controls.Add(lblPlayerBullet);
             Controls.Add(computerShield);
             Controls.Add(playerMuzzle);
             Controls.Add(playerGun);
             Controls.Add(btnBlock);
             Controls.Add(btnReload);
             Controls.Add(btnShot);
-            Controls.Add(label1);
+            Controls.Add(lblGameName);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Form1";
             Text = "Shotgun Game";
@@ -489,7 +549,11 @@
             ((System.ComponentModel.ISupportInitialize)computerReload).EndInit();
             ((System.ComponentModel.ISupportInitialize)playerShield).EndInit();
             ((System.ComponentModel.ISupportInitialize)explosion).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbAddBet).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbArmor).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbShotgun).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbDeathComputer).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbDeathPlayer).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -497,18 +561,18 @@
         #endregion
 
         private System.Windows.Forms.Timer gunAnimationTimer;
-        private Label label1;
+        private Label lblGameName;
         private Button btnShot;
         private Button btnReload;
         private Button btnBlock;
         private PictureBox playerGun;
         private PictureBox playerMuzzle;
         private PictureBox computerShield;
-        private Label label2;
+        private Label lblPlayerBullet;
         private PictureBox playerReload;
-        private Label label3;
+        private Label lblComputerBullet;
         private Label label4;
-        private Label label5;
+        private Label lblGameResult;
         private PictureBox computerGun;
         private PictureBox computerReload;
         private PictureBox playerShield;
@@ -520,13 +584,18 @@
         private Label lblExit;
         private Button btnStartGame;
         private Label lblRoundAmount;
-        private Label label7;
-        private Label label8;
-        private Label label9;
-        private Label label6;
-        private Button btnShotGun;
-        private PictureBox pictureBox1;
-        private Button button1;
-        private Button button2;
+        private Label lblMoney;
+        private Label lblBet;
+        private Label lblWin;
+        private Label lblGameOver;
+        private Button btnShotgun;
+        private PictureBox pbAddBet;
+        private Button btnShop;
+        private Button btnSlots;
+        private System.ComponentModel.BackgroundWorker WinOrLoose;
+        private PictureBox pbArmor;
+        private PictureBox pbShotgun;
+        private PictureBox pbDeathComputer;
+        private PictureBox pbDeathPlayer;
     }
 }

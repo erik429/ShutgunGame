@@ -2,8 +2,9 @@
 {
     public partial class Shop : Form
     {
-        int armorCost = 4000;
-        int shotgunCost = 8000;
+        WMPLib.WindowsMediaPlayer player = new WMPLib.WindowsMediaPlayer();
+        int armorCost = 3000;
+        int shotgunCost = 5000;
         public int money;
         Inventory inventory = new Inventory();
         public Shop(Inventory gameInventory, ref int playerMoney)
@@ -13,18 +14,22 @@
             InitializeComponent();
             label5.Text = "Money: " + playerMoney + " $";
         }
-
+        private void PlaySound(string sound)
+        {
+            player.URL = sound;
+        }
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             if (money >= armorCost)
             {
                 inventory.AddItem(("Armor"));
                 money -= armorCost;
-                MessageBox.Show("You bought armor");
+                label5.Text = "Money: " + money + " $";
+                PlaySound(@"C:\Demo\equiparmor.mp3");
             }
             else
             {
-                MessageBox.Show("You don't have the money...");
+                MessageBox.Show("You can't afford this item");
             }
         }
 
@@ -46,7 +51,17 @@
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Do you want to buy Shotgun?");
+            if (money >= shotgunCost)
+            {
+                inventory.AddItem(("Shotgun"));
+                money -= shotgunCost;
+                label5.Text = "Money: " + money + " $";
+                PlaySound(@"C:\Demo\shotgunreload.mp3");
+            }
+            else
+            {
+                MessageBox.Show("You can't afford this item");
+            }
         }
 
         private void Shop_Load(object sender, EventArgs e)

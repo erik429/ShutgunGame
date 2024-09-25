@@ -50,6 +50,22 @@ namespace ShutgunGame
                 return false;
             }
         }
+        public bool CheckShotgun()
+        {
+            if (inventory.HasItem("Shotgun"))
+            {
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public void RemoveArmor()
+        {
+            inventory.removeItem("Armor");
+        }
         public string PlayGame(int playerchoice)
         {
             if (computer.CanShotgun())
@@ -96,8 +112,7 @@ namespace ShutgunGame
                 {
                     if (inventory.HasItem("Armor"))
                     {
-                        gameResult.AppendLine("AI shot, and you reloaded. But you had Armor!");
-                        inventory.removeItem("Armor");
+                        gameResult.AppendLine("AI shot, and you reloaded. But you had Armor! \n -1 Armor");
                     }
                     else
                     {
@@ -145,8 +160,19 @@ namespace ShutgunGame
             Round++;
             if (CanShotgun() && playerchoice != 4 && player.Bullets != 3)
             {
-                LostGame = true;
-                return "Computer got shotgun. You lost";
+                if (!CheckShotgun())
+                {
+                    LostGame = true;
+                    inventory.RemoveAllItems();
+                    return "Computer got shotgun. You lost";
+                }
+                else
+                {
+                    computer.AIBullets -= 1;
+                    inventory.removeItem("Shotgun");
+                    return "Computer shotgun! \nBut you had shotgun item. AI lost 1 bullet";
+                }
+
                 
             }
             else if(CanShotgun() && playerchoice == 4)
@@ -159,14 +185,26 @@ namespace ShutgunGame
                         WonGame = true;
                         return "You won the coinflip!";
                     }
-                    LostGame = true;
-                    return "You lost the coinflip!";
-                    
+                    else
+                    {
+                    if (!CheckShotgun())
+                    {
+                        LostGame = true;
+                        inventory.RemoveAllItems();
+                        return "You lost the coinflip!";
+                    }
+                    else
+                    {
+                        WonGame = true;
+                        inventory.removeItem("Shotgun");
+                        return "You lost the coinflip! \n But you had shotgun item. AI lost 1 bullet";
+                    }
+                    }  
                 }
             else if (playerchoice == 4)
             {
                 WonGame = true;
-                return "You got shotgun pangpang!";
+                return "You got shotgun!";
             }
             return gameResult.ToString();
         }

@@ -10,6 +10,7 @@
         items.Add(item);
     }
 
+
     public bool HasItem(string item)
     {
         return items.Contains(item);
@@ -18,5 +19,10 @@
         {
            items.Remove(item);
         }
+        public void RemoveAllItems()
+        {
+                items.Clear();
+        }
     }
+
 }

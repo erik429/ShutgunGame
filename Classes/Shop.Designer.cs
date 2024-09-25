@@ -50,7 +50,7 @@
             label1.BackColor = Color.Transparent;
             label1.Font = new Font("Vanilla Whale", 47.9999924F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.Yellow;
-            label1.Location = new Point(132, -2);
+            label1.Location = new Point(73, -3);
             label1.Name = "label1";
             label1.Size = new Size(212, 77);
             label1.TabIndex = 0;
@@ -84,34 +84,34 @@
             // 
             label2.AutoSize = true;
             label2.BackColor = Color.Transparent;
-            label2.Font = new Font("Rio Grande", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Font = new Font("Woodcut", 14.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.Yellow;
             label2.Location = new Point(19, 18);
             label2.Name = "label2";
-            label2.Size = new Size(221, 29);
+            label2.Size = new Size(246, 19);
             label2.TabIndex = 3;
-            label2.Text = "Shotgun 8000$";
+            label2.Text = "Shotgun 5000 $";
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.BackColor = Color.Transparent;
-            label3.Font = new Font("Rio Grande", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Font = new Font("Woodcut", 14.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.Yellow;
-            label3.Location = new Point(23, 19);
+            label3.Location = new Point(0, 18);
             label3.Name = "label3";
-            label3.Size = new Size(157, 22);
+            label3.Size = new Size(208, 19);
             label3.TabIndex = 4;
-            label3.Text = "Armor 4000$";
+            label3.Text = "Armor 3000$";
             // 
             // groupBox1
             // 
             groupBox1.BackColor = Color.Transparent;
             groupBox1.Controls.Add(pictureBox1);
             groupBox1.Controls.Add(label2);
-            groupBox1.Location = new Point(198, 90);
+            groupBox1.Location = new Point(33, 235);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(282, 106);
+            groupBox1.Size = new Size(267, 106);
             groupBox1.TabIndex = 5;
             groupBox1.TabStop = false;
             groupBox1.Enter += groupBox1_Enter;
@@ -121,9 +121,9 @@
             groupBox2.BackColor = Color.Transparent;
             groupBox2.Controls.Add(pictureBox2);
             groupBox2.Controls.Add(label3);
-            groupBox2.Location = new Point(12, 90);
+            groupBox2.Location = new Point(67, 66);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(180, 176);
+            groupBox2.Size = new Size(207, 163);
             groupBox2.TabIndex = 6;
             groupBox2.TabStop = false;
             groupBox2.Enter += groupBox2_Enter;
@@ -134,7 +134,7 @@
             label4.BackColor = Color.Transparent;
             label4.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.ForeColor = Color.Red;
-            label4.Location = new Point(457, 9);
+            label4.Location = new Point(310, 9);
             label4.Name = "label4";
             label4.Size = new Size(23, 25);
             label4.TabIndex = 7;
@@ -145,11 +145,11 @@
             // 
             label5.AutoSize = true;
             label5.BackColor = Color.Transparent;
-            label5.Font = new Font("Western Bang Bang", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label5.Font = new Font("Woodcut", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.ForeColor = Color.Yellow;
-            label5.Location = new Point(263, 260);
+            label5.Location = new Point(45, 361);
             label5.Name = "label5";
-            label5.Size = new Size(104, 25);
+            label5.Size = new Size(271, 25);
             label5.TabIndex = 8;
             label5.Text = "Money 4000$";
             // 
@@ -158,7 +158,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
-            ClientSize = new Size(485, 313);
+            ClientSize = new Size(345, 395);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(groupBox2);
