@@ -177,6 +177,7 @@ namespace ShutgunGame
                 computerballY -= computerballYSpeed;
             }
             this.Invalidate();
+            this.Refresh();
         }
         private void UpdateUI() // UPDATE UI
         {
@@ -403,6 +404,8 @@ namespace ShutgunGame
             timerHide.Stop();
             gunAnimationTimer.Stop();
             pbAddBet.Enabled = true;
+            btnShop.Enabled = true;
+            btnSlots.Enabled = true;
             btnStartGame.Visible = false;
             lblGameOver.Visible = false;
             lblWin.Visible = false;

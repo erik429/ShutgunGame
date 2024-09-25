@@ -167,6 +167,7 @@
             // 
             // computerShield
             // 
+            computerShield.BackColor = Color.Transparent;
             computerShield.BackgroundImage = (Image)resources.GetObject("computerShield.BackgroundImage");
             computerShield.BackgroundImageLayout = ImageLayout.Stretch;
             computerShield.Location = new Point(986, 207);
@@ -253,6 +254,7 @@
             // 
             // playerShield
             // 
+            playerShield.BackColor = Color.Transparent;
             playerShield.BackgroundImage = (Image)resources.GetObject("playerShield.BackgroundImage");
             playerShield.BackgroundImageLayout = ImageLayout.Stretch;
             playerShield.Location = new Point(56, 207);
