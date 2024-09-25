@@ -25,7 +25,7 @@ namespace ShutgunGame
         private int x = 0;
         private int cnt = 0;
         private int bet = 0;
-        public int money = 1100;
+        public int money = 114400;
 
         private int mouseX = 0;
         private int mouseY = 0;
@@ -45,14 +45,14 @@ namespace ShutgunGame
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            btnShotgun.Visible = false;
+            btnShotgun.Hide();
             HideAll();
             //MainTheme(@"C:\Demo\maintheme.mp3");
             foreach (Control control in this.Controls)
             {
                 if (control != btnStartGame && control != lblGameName && control != panel2 && control != lblExit && control != panel1)
                 {
-                    control.Visible = false;
+                    control.Hide();
                 }
             }
         }
@@ -189,19 +189,20 @@ namespace ShutgunGame
             {
                 pbShotgun.Show();
             }
-            lblMoney.Text = "Money: " + money.ToString();
-            lblBet.Text = "Bet: " + bet.ToString();
-            lblRoundAmount.Text = "Round: " + ToRoman(game.Round);
-            lblPlayerBullet.Text = "Player Bullets: " + game.GetBullet();
+            lblMoney.Text = "Money " + money.ToString() + "$";
+            lblBet.Text = "Bet " + bet.ToString() + "$";
+            lblRoundAmount.Text = "Round " + ToRoman(game.Round);
+            lblPlayerBullet.Text = "Your Bullets: " + game.GetBullet();
 
-            lblComputerBullet.Text = "Computer Bullets: " + game.GetComputer();
+            lblComputerBullet.Text = "AI Bullets: " + game.GetComputer();
             if (game.GetBullet() == "0")
             {
-                btnShot.Enabled = false;
+                lblFire.Hide();
+                btnShot.Hide();
             }
             else
             {
-                btnShot.Enabled = true;
+                btnShot.Show();
 
             }
         }
@@ -221,9 +222,9 @@ namespace ShutgunGame
         }
         private void DisableUserControl()
         {
-            btnShot.Visible = false;
-            btnReload.Visible = false;
-            btnBlock.Visible = false;
+            btnShot.Hide();
+            btnReload.Hide();
+            btnBlock.Hide();
         }
         private void ComputerChoice()
         {
@@ -355,11 +356,18 @@ namespace ShutgunGame
                 }
                 else if (btnStartGame.Visible == false)
                 {
-                    btnSlots.Enabled = true;
-                    btnShop.Enabled = true;
+                    if (game.GetBullet() != "0")
+                    {
+                        lblFire.Visible = true;
+                        btnShot.Visible = true;
+                    }
+                    btnSlots.Visible = true;
+                    btnShop.Visible = true;
                     btnBlock.Visible = true;
                     btnReload.Visible = true;
-                    btnShot.Visible = true;
+                    lblFire.Visible = true;
+                    lblReload.Visible = true;
+                    lblBlock.Visible = true;
                 }
                 timerShowResult.Stop();
                 lblGameResult.Hide();
@@ -403,9 +411,10 @@ namespace ShutgunGame
             ranbefore = false;
             timerHide.Stop();
             gunAnimationTimer.Stop();
+            pbAddBet.Visible = true;
             pbAddBet.Enabled = true;
-            btnShop.Enabled = true;
-            btnSlots.Enabled = true;
+            btnShop.Visible = true;
+            btnSlots.Visible = true;
             btnStartGame.Visible = false;
             lblGameOver.Visible = false;
             lblWin.Visible = false;
@@ -414,6 +423,7 @@ namespace ShutgunGame
         }
         private void btnShotGun_Click(object sender, EventArgs e) //CLICK SHOTGUN
         {
+            btnShotgun.Hide();
             gameResult = game.PlayGame(4);
             timerHide.Start();
         }
@@ -436,8 +446,8 @@ namespace ShutgunGame
             {
                 pbAddBet.Enabled = false;
             }
-            lblBet.Text = "Bet: " + bet.ToString() + " $";
-            lblMoney.Text = "Money: " + money.ToString() + " $";
+            lblBet.Text = "Bet " + bet.ToString() + "$";
+            lblMoney.Text = "Money " + money.ToString() + "$";
         }
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e) //WIN GAME THREAD.
         {
@@ -515,12 +525,18 @@ namespace ShutgunGame
                 }
             }));
         }
-
+        public void DisableShops()
+        {
+            btnSlots.Hide();
+            btnShop.Visible = false;
+            pbAddBet.Visible = false;
+            lblFire.Hide();
+            lblReload.Hide();
+            lblBlock.Visible = false;
+        }
         private void btnShot_Click(object sender, EventArgs e) //BTN SHOOT
         {
-            btnSlots.Enabled = false;
-            btnShop.Enabled = false;
-            pbAddBet.Enabled = false;
+            DisableShops();
             PlaySound(@"C:\Demo\gun.wav");
             ResetPlayerBall();
             playerGun.Show();
@@ -535,9 +551,7 @@ namespace ShutgunGame
 
         private void btnReload_Click(object sender, EventArgs e) // BTN RELOAD
         {
-            btnSlots.Enabled = false;
-            btnShop.Enabled = false;
-            pbAddBet.Enabled = false;
+            DisableShops();
             PlaySound(@"C:\Demo\reload.wav");
             choice = 2;
             gameResult = game.PlayGame(choice);
@@ -549,10 +563,7 @@ namespace ShutgunGame
 
         private void btnBlock_Click(object sender, EventArgs e) //BTN BLOCK
         {
-            
-            btnSlots.Enabled = false;
-            btnShop.Enabled = false;
-            pbAddBet.Enabled = false;
+            DisableShops();
             PlaySound(@"C:\Demo\block.wav");
             choice = 3;
             gameResult = game.PlayGame(choice);

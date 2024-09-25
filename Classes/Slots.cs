@@ -40,6 +40,11 @@ namespace ShutgunGame.Classes
             {
                 button1.Enabled = false;
             }
+            if (credit == 0)
+            {
+                button3.Enabled = false;
+                button4.Enabled = false;
+            }
             lblnoWin.Visible = false;
             lbljackpot.Visible = false;
             lblwinAmount.Visible = false;
@@ -148,6 +153,8 @@ namespace ShutgunGame.Classes
                 cnt++;
                 button1.Text = "Spin";
                 button1.Enabled = true;
+                button3.Enabled = true;
+                button4.Enabled = true; 
 
                 // Reset the timer and sounds
                 timer1.Enabled = false;
@@ -267,6 +274,8 @@ namespace ShutgunGame.Classes
             SpinAnimation();
             CalculateWin();
             Reset();
+            button3.Enabled = false;
+            button4.Enabled = false;
             label4.Text = "Spin: " + cnt.ToString();
             button1.Enabled = false;
             button1.Text = "Good luck...";
@@ -290,10 +299,10 @@ namespace ShutgunGame.Classes
         {
             PlaySound(@"C:\Demo\slotmachineinsert.mp3");
             if (bet > 0) bet -= 5;
-            if (bet <= credit) //button1.Enabled = true;
                 betlbl.Text = "BET: " + bet.ToString() + " $";
             if (bet == 0)
             {
+                button1.Enabled = false;
             }
         }
 

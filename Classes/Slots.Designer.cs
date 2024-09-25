@@ -96,8 +96,8 @@
             // button1
             // 
             button1.BackColor = Color.Transparent;
-            button1.FlatAppearance.BorderColor = Color.Cornsilk;
-            button1.FlatAppearance.BorderSize = 2;
+            button1.FlatAppearance.BorderColor = Color.FloralWhite;
+            button1.FlatAppearance.BorderSize = 3;
             button1.FlatAppearance.MouseDownBackColor = Color.Transparent;
             button1.FlatAppearance.MouseOverBackColor = Color.Transparent;
             button1.FlatStyle = FlatStyle.Flat;
@@ -116,7 +116,12 @@
             // button3
             // 
             button3.BackColor = Color.Transparent;
-            button3.FlatAppearance.BorderSize = 3;
+            button3.BackgroundImage = (Image)resources.GetObject("button3.BackgroundImage");
+            button3.BackgroundImageLayout = ImageLayout.Zoom;
+            button3.FlatAppearance.BorderColor = Color.FloralWhite;
+            button3.FlatAppearance.BorderSize = 2;
+            button3.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            button3.FlatAppearance.MouseOverBackColor = Color.Transparent;
             button3.FlatStyle = FlatStyle.Flat;
             button3.Font = new Font("Western Bang Bang", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button3.ForeColor = Color.Cornsilk;
@@ -125,23 +130,26 @@
             button3.Name = "button3";
             button3.Size = new Size(38, 41);
             button3.TabIndex = 5;
-            button3.Text = "+";
             button3.UseVisualStyleBackColor = false;
             button3.Click += button3_Click;
             // 
             // button4
             // 
             button4.BackColor = Color.Transparent;
-            button4.FlatAppearance.BorderSize = 3;
+            button4.BackgroundImage = (Image)resources.GetObject("button4.BackgroundImage");
+            button4.BackgroundImageLayout = ImageLayout.Zoom;
+            button4.FlatAppearance.BorderColor = Color.FloralWhite;
+            button4.FlatAppearance.BorderSize = 2;
+            button4.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            button4.FlatAppearance.MouseOverBackColor = Color.Transparent;
             button4.FlatStyle = FlatStyle.Flat;
             button4.Font = new Font("Western Bang Bang", 26.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button4.ForeColor = Color.Cornsilk;
-            button4.Location = new Point(61, 426);
+            button4.Location = new Point(66, 426);
             button4.Margin = new Padding(3, 4, 3, 4);
             button4.Name = "button4";
             button4.Size = new Size(38, 41);
             button4.TabIndex = 6;
-            button4.Text = "-";
             button4.UseVisualStyleBackColor = false;
             button4.Click += button4_Click;
             // 

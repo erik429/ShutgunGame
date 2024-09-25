@@ -170,7 +170,7 @@ namespace ShutgunGame
                 {
                     computer.AIBullets -= 1;
                     inventory.removeItem("Shotgun");
-                    return "AI shotgun! \nBut you had shotgun item. AI lost 1 bullet";
+                    return "AI got shotgun! \n But you had shotgun item. AI lost 1 bullet!";
                 }
 
                 
@@ -203,8 +203,8 @@ namespace ShutgunGame
                 }
             else if (playerchoice == 4)
             {
-                WonGame = true;
-                return "You got shotgun!";
+                WonGame = true; 
+                return "You got the Shotgun!";
             }
             return gameResult.ToString();
         }
