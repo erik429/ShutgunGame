@@ -164,13 +164,13 @@ namespace ShutgunGame
                 {
                     LostGame = true;
                     inventory.RemoveAllItems();
-                    return "Computer got shotgun. You lost";
+                    return "AI got shotgun. You lost";
                 }
                 else
                 {
                     computer.AIBullets -= 1;
                     inventory.removeItem("Shotgun");
-                    return "Computer shotgun! \nBut you had shotgun item. AI lost 1 bullet";
+                    return "AI shotgun! \nBut you had shotgun item. AI lost 1 bullet";
                 }
 
                 
