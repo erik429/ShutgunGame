@@ -33,12 +33,7 @@ Steps:
 
 ## 🎵 Media
 
-Ensure these audio files are placed in `C:\Demo\` for full functionality:
-- `maintheme.mp3`
-- `bullethit.mp3`
-- `ricochet.wav`
-- `explosion.wav`
-- `startgame.mp3`
+Ensure to install the audio files in C:\Demo\
 
 ---
 
