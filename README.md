@@ -1,6 +1,7 @@
-![Shotgun Game]([https://github.com/user-attachments/assets/placeholder-image-for-game](https://media.discordapp.net/attachments/282602166068314132/1322698250238693427/image.png?ex=6771d23d&is=677080bd&hm=35496438a1f4072dfa605e10f79fb263994b4fce8806e5234764db19dc759f71&=&format=webp&quality=lossless))
+![Shotgun Game](https://media.discordapp.net/attachments/282602166068314132/1322698250238693427/image.png?ex=6771d23d&is=677080bd&hm=35496438a1f4072dfa605e10f79fb263994b4fce8806e5234764db19dc759f71&=&format=webp&quality=lossless)
 
-# Shotgun Game <img src="https://example.com/game-icon.png" width="50">
+# Shotgun Game <img src="https://media.discordapp.net/attachments/282602166068314132/1322698773981429770/image.png?ex=6771d2ba&is=6770813a&hm=33f5bb49454d9a2eee27144682faf518e446206c2859a1f72a30f753649bb52d&=&format=webp&quality=lossless&width=316&height=350" width="50">
+
 
 **Shotgun Game** is an intense and strategic desktop game where players duel against an AI opponent, making life-or-death decisions in real time.
 
