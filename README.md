@@ -39,4 +39,4 @@ Ensure to install the audio files in C:\Demo\
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/shotgun-game.git
+   git clone https://github.com/erik429/ShutgunGame.git
