@@ -9,19 +9,17 @@
 
 ## 🛠️ Features
 
-✅ **Real-Time Graphics**: Dynamic rendering for bullets, explosions, and shields.  
-✅ **AI Opponent**: Intelligent AI that reacts strategically.  
-✅ **Diverse Mechanics**: Shoot, block, reload, or use the powerful shotgun.  
-✅ **Shops and Slots**: Earn money to upgrade abilities or test your luck in slots.  
-✅ **Immersive Sound Effects**: Includes shooting, reloading, and victory sounds.
+✅ **Real-Time Graphics**: Dynamic rendering for bullets, explosions, and shields. (insane animations, many fps)
+✅ **AI Opponent**: Intelligent AI that reacts strategically. (very much intelligent)
+✅ **Diverse Mechanics**: Shoot, block, reload, or if enought bullets use the powerful shotgun.
+✅ **Shops and Slots**: Earn money to upgrade abilities or test your luck in slots. (I'm bad @ math the slotmachine is OP. You will most likely profit.
 
 ---
 
 ## 🚀 How It Works
 
 👾 The game pits you against an AI opponent in rounds of duels.  
-🎮 Players must choose their actions carefully to outsmart the opponent.  
-🎯 Victory grants money, which can be used in shops or slots to enhance gameplay.
+🎯 Victory grants money, which can be used in shops or slots
 
 Steps:
 1. 🎯 **Shoot**: Attempt to hit your opponent.  
